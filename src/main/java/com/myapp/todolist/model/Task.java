@@ -34,13 +34,11 @@ public class Task {
      * 
      * @param title タスクのタイトル
      * @param description タスクの詳細
-     * @param completed タスクの完了ステータス
      * @param dueDate タスクの期限
      */
-    public Task(String title, String description, boolean completed, LocalDate dueDate) {
+    public Task(String title, String description,LocalDate dueDate) {
         this.title = title;
         this.description = description;
-        this.completed = completed;
         this.dueDate = dueDate;
     }
 

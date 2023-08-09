@@ -11,7 +11,7 @@ import com.myapp.todolist.model.Task;
 import com.myapp.todolist.util.DatabaseUtil;
 
 /**
- * Taskエンティティに関するデータベース操作を管理するDAOクラス
+ * タスクに関するデータベース操作を管理するDAOクラス
  */
 public class TaskDAO {
     /**
@@ -49,7 +49,7 @@ public class TaskDAO {
      * @param task 追加するタスク
      */
     public void insert(Task task) {
-    	String sql = "INSERT INTO tasks(title, description, completed, dueDate) VALUES (?, ?, ?, ?)";
+    	String sql = "INSERT INTO tasks(title, description, dueDate) VALUES (?, ?, ?)";
     	
     	try (
     			Connection conn = DatabaseUtil.getConnection();
@@ -57,7 +57,6 @@ public class TaskDAO {
     		){
 	            pstmt.setString(1, task.getTitle());
 	            pstmt.setString(2, task.getDescription());
-	            pstmt.setBoolean(3, task.isCompleted());
 	            pstmt.setDate(4, java.sql.Date.valueOf(task.getDueDate()));
 	            
 	            pstmt.executeUpdate();

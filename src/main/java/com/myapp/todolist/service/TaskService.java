@@ -5,6 +5,9 @@ import java.util.List;
 import com.myapp.todolist.dao.TaskDAO;
 import com.myapp.todolist.model.Task;
 
+/**
+ * タスクに関連するビジネスロジックを提供するサービスクラス
+ */
 public class TaskService {
 	
 	private TaskDAO taskDAO = new TaskDAO();
