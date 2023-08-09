@@ -35,8 +35,13 @@ public class DatabaseUtil {
                 throw new DatabaseException("データベースの設定ファイルが見つかりません。");
             }
             props.load(input);
+      
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            
         } catch (IOException ex) {
             throw new DatabaseException("データベースの設定読み込みエラー。", ex);
+        } catch (ClassNotFoundException e) {
+            throw new DatabaseException("JDBCドライバのロードエラー。", e);
         }
     }
 
