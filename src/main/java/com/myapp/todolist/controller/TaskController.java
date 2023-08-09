@@ -50,6 +50,8 @@ public class TaskController extends HttpServlet {
      */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		req.setCharacterEncoding("UTF-8");
 		//リクエストからタスクのデータを取得
 		Task task = new Task();
 		task.setTitle(req.getParameter("title"));

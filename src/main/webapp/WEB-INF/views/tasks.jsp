@@ -16,7 +16,7 @@
 </c:if>
 
 <!-- タスクの追加フォーム -->
-<form action="/tasks" method="post">
+<form action="${pageContext.request.contextPath}/tasks" method="post">
     <label>タイトル: <input type="text" name="title" /></label><br/>
     <label>説明: <textarea name="description"></textarea></label><br/>
     <label>期限: <input type="date" name="dueDate" value="${inputValue}" /></label><br/>
