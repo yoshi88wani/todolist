@@ -9,16 +9,20 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.myapp.todolist.model.Task;
 import com.myapp.todolist.util.DatabaseTestUtil;
 import com.myapp.todolist.util.DatabaseUtil.DatabaseException;
 
 class TaskDAOTest {
 
+	private TaskDAO  taskDAO;
+	
 	@BeforeEach
 	void setUp() throws SQLException {
 	    try (Connection conn = DatabaseTestUtil.getTestConnection();
@@ -40,6 +44,11 @@ class TaskDAOTest {
 
 	@Test
 	void testFindAll() {
+		
+		List<Task> result = taskDAO.findAll();
+		
+		assertEquals(2, result.size());
+		assertArrayEquals({1, "Test Task 1", "Description for task 1", false, "2023-08-30"},result[0]);
 		
 	}
 
