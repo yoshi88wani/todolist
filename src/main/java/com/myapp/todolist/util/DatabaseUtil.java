@@ -34,8 +34,9 @@ public class DatabaseUtil {
             if (input == null) {
                 throw new DatabaseException("データベースの設定ファイルが見つかりません。");
             }
+            
             props.load(input);
-      
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             
         } catch (IOException ex) {

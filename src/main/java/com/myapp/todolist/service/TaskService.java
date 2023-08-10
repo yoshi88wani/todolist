@@ -10,8 +10,12 @@ import com.myapp.todolist.model.Task;
  */
 public class TaskService {
 	
-	private TaskDAO taskDAO = new TaskDAO();
-	
+	private TaskDAO taskDAO;
+    // コンストラクタでTaskDAOのインスタンスを受け取る
+    public TaskService(TaskDAO taskDAO) {
+        this.taskDAO = taskDAO;
+    }
+    
 	/**
 	 * タスクの全件取得
 	 * 

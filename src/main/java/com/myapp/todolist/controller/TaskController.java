@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.myapp.todolist.dao.TaskDAO;
 import com.myapp.todolist.model.Task;
 import com.myapp.todolist.service.TaskService;
 
@@ -22,8 +23,13 @@ import com.myapp.todolist.service.TaskService;
 @WebServlet("/tasks")
 public class TaskController extends HttpServlet {
 	
-	/** タスクに関連するビジネスロジックを提供するサービスクラスのインスタンス */
-	private TaskService taskService = new TaskService();
+	private TaskService taskService;
+	
+	@Override
+	public void init() throws ServletException {
+	    TaskDAO taskDAO = new TaskDAO();
+	    this.taskService = new TaskService(taskDAO);  
+	}
 	
     /**
      * HTTP GETメソッドをハンドルし、タスクの一覧を表示します。
