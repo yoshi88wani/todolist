@@ -3,6 +3,8 @@ package com.myapp.todolist.controller;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,7 +43,7 @@ public class TaskController extends HttpServlet {
 	
     /**
      * HTTP POSTメソッドをハンドルし、新しいタスクを追加します。
-     * 日付の形式が不正な場合は、エラーメッセージと共にタスクの一覧ページにリダイレクトします。
+     * 形式が不正な場合は、エラーメッセージを表示します。
      *
      * @param req  HTTPリクエスト
      * @param res  HTTPレスポンス
@@ -52,25 +54,36 @@ public class TaskController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
 		req.setCharacterEncoding("UTF-8");
-		//リクエストからタスクのデータを取得
-		Task task = new Task();
-		task.setTitle(req.getParameter("title"));
-		task.setDescription(req.getParameter("description"));
-		try {
-			
-			task.setDueDate(LocalDate.parse(req.getParameter("dueDate")));	
-	
-		} catch (DateTimeException e) {
-			
-		    // ユーザーにエラーメッセージを表示
-		    req.setAttribute("errorMessage", "提供された日付が正しくありません。正しい形式（YYYY-MM-DD）で入力してください。");
-		    
-		    //JSPにフォワード
-			req.getRequestDispatcher("/WEB-INF/views/tasks.jsp").forward(req, res);
-		    return;  
-		}
 		
-		taskService.addTask(task);
+		List<String> errors = new ArrayList<>();
+		
+	    // タイトルの検証
+	    String title = req.getParameter("title");
+	    if (title == null || title.trim().isEmpty()) {
+	        errors.add("タイトルは必須です。");
+	    }
+
+	    // 日付の検証
+	    try {
+	        LocalDate.parse(req.getParameter("dueDate"));
+	    } catch (DateTimeException e) {
+	        errors.add("提供された日付が正しくありません。正しい形式（YYYY-MM-DD）で入力してください。");
+	    }
+	    
+	    // エラーメッセージがある場合、JSPにフォワードして表示
+	    if (!errors.isEmpty()) {
+	        req.setAttribute("errorMessages", errors);
+	        req.setAttribute("tasks", taskService.getAllTasks());
+	        req.getRequestDispatcher("/WEB-INF/views/tasks.jsp").forward(req, res);
+	        return;
+	    }
+	    
+	    // タスクの追加
+	    Task task = new Task();
+	    task.setTitle(title);
+	    task.setDescription(req.getParameter("description"));
+	    task.setDueDate(LocalDate.parse(req.getParameter("dueDate")));
+	    taskService.addTask(task);
 		
 		//一覧ページへ戻る
 		res.sendRedirect(req.getContextPath() + "/tasks");

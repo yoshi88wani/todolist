@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +13,12 @@
 <h1>タスク一覧</h1>
 
 <!-- エラーメッセージの表示 -->
-<c:if test="${not empty errorMessage}">
-    <div style="color:red;">${errorMessage}</div>
+<c:if test="${not empty errorMessages}">
+    <ul class="error-messages">
+        <c:forEach items="${errorMessages}" var="errorMessage">
+            <li style="color:red;"><c:out value="${errorMessage}" /></li>
+        </c:forEach>
+    </ul>
 </c:if>
 
 <!-- タスクの追加フォーム -->

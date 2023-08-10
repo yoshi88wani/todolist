@@ -57,7 +57,7 @@ public class TaskDAO {
     		){
 	            pstmt.setString(1, task.getTitle());
 	            pstmt.setString(2, task.getDescription());
-	            pstmt.setDate(4, java.sql.Date.valueOf(task.getDueDate()));
+	            pstmt.setDate(3, java.sql.Date.valueOf(task.getDueDate()));
 	            
 	            pstmt.executeUpdate();
     		    
