@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class Task {
 
-	 /** タスクのユニークID */
+	 /** タスクのID */
     private int id;
 
     /** タスクのタイトル */

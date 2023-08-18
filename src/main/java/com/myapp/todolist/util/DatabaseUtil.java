@@ -11,7 +11,9 @@ import java.util.Properties;
  * データベース接続を管理するユーティリティクラス。
  */
 public class DatabaseUtil {
-    private static final String CONFIG_PATH = "config.properties";
+	
+    private static final String CONFIG_PATH = "database.properties";
+    
     private static Properties props = new Properties();
     
     // カスタム例外の定義
@@ -36,8 +38,8 @@ public class DatabaseUtil {
             }
             
             props.load(input);
-            
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            String driver = props.getProperty("db.driverClassName"); 
+            Class.forName(driver);
             
         } catch (IOException ex) {
             throw new DatabaseException("データベースの設定読み込みエラー。", ex);
