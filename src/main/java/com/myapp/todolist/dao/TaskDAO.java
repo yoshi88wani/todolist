@@ -44,6 +44,39 @@ public class TaskDAO {
     }
     
     /**
+     * タスク一件取得
+     * 
+     * @param id タスクID
+     * @return task 該当タスク
+     */
+    public Task findById(int id) {
+    	Task task = null;
+    	String sql = "SELECT * FROM tasks WHERE id = ?";
+    	
+    	try (
+    			Connection conn = DatabaseUtil.getConnection();
+        		PreparedStatement pstmt = conn.prepareStatement(sql)
+    		){
+	    	    pstmt.setInt(1, id);
+	    		try (ResultSet rs = pstmt.executeQuery()) {
+	    			if(rs.next()) {
+	    				task = new Task();
+	    	    		task.setId(rs.getInt("id"));
+	    	            task.setTitle(rs.getString("title"));
+	    	            task.setDescription(rs.getString("description"));
+	    	            task.setCompleted(rs.getBoolean("completed"));
+	    	            task.setDueDate(rs.getDate("dueDate").toLocalDate());
+	    			} else {
+	    				throw new DatabaseUtil.DatabaseException("指定されたタスクが見つかりません。");
+	    			}
+	    		}
+	    } catch(SQLException e) {
+	    	throw new DatabaseUtil.DatabaseException("タスクの１件取得中にエラーが発生しました。", e);
+	    }
+    	return task;    		
+    }
+    
+    /**
      * 新しいタスクを追加します。
      *
      * @param task 追加するタスク
