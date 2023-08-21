@@ -26,6 +26,16 @@ public class TaskService {
 	}
 	
 	/**
+	 * タスクの一件取得
+	 * 
+	 * @param id タスクのID
+	 * @return 該当するタスク
+	 */
+	public Task getTaskById(int id) {
+		return taskDAO.findById(id);
+	}
+	
+	/**
      * タスクを追加します。
      * 
      * @param task 追加するタスク

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,10 +23,10 @@
 
 <!-- タスクの追加フォーム -->
 <form action="${pageContext.request.contextPath}/tasks" method="post">
-    <label>タイトル: <input type="text" name="title" /></label><br/>
-    <label>説明: <textarea name="description"></textarea></label><br/>
-    <label>期限: <input type="date" name="dueDate" value="${inputValue}" /></label><br/>
-    <input type="submit" value="タスクを追加" />
+    <label>タイトル*: <input type="text" name="title"></label><br>
+    <label>説明: <textarea name="description"></textarea></label><br>
+    <label>期限: <input type="date" name="dueDate" value="${inputValue}"></label><br>
+    <input type="submit" value="タスクを追加">
 </form>
 
 <!-- タスクの一覧表示 -->
@@ -37,6 +37,7 @@
         <th>説明</th>
         <th>期限</th>
         <th>状態</th>
+        <th>操作</th>
     </tr>
     <c:forEach items="${tasks}" var="task">
         <tr>
@@ -45,6 +46,10 @@
             <td>${task.description}</td>
             <td>${task.dueDate}</td>
             <td>${task.completed ? "完了" :"未了" }</td>
+            <td>
+            	<a href="edit-task?id=${task.id}">編集</a>
+            	<a href="delete-task?id=${task.id}" onclick="return confirm('本当に削除しますか？');">削除</a>
+           	</td>
         </tr>
     </c:forEach>
 </table>
