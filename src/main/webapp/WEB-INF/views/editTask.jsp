@@ -22,13 +22,13 @@
 </c:if>
 
 <!-- タスクの編集フォーム -->
-<form action="${pageContext.request.contextPath}/edit-task" method="post">
+<form action="${pageContext.request.contextPath}/tasks/edit" method="post">
     <label>タイトル*: <input type="text" name="title" value="${task.title}"></label><br>
     <label>説明: <textarea name="description">${task.description}</textarea></label><br>
     <label>期限: <input type="date" name="dueDate" value="${task.dueDate}"></label><br>
     <label>状態: <input type="checkbox" name="completed" value="true" ${task.completed ? "checked" : ""}></label><br>
-    <input type="submit" value="保存">
     <input type="hidden" name="id" value="${task.id}">
+    <input type="submit" value="保存">
 </form>
 
 </body>

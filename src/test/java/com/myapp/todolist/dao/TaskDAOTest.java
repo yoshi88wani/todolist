@@ -58,6 +58,11 @@ class TaskDAOTest {
 		assertEquals(true, task2.isCompleted());
 		assertEquals(LocalDate.parse("2023-08-31"), task2.getDueDate());
 	}
+	
+	@Test
+	void testFindById() {
+		fail("まだ実装されていません");
+	}
 
 	@Test
 	void testInsert() {
@@ -75,7 +80,7 @@ class TaskDAOTest {
 		assertEquals(LocalDate.parse("2023-08-31"), task3.getDueDate());
 		
 	}
-/*
+
 	@Test
 	void testUpdate() {
 		fail("まだ実装されていません");
@@ -85,5 +90,4 @@ class TaskDAOTest {
 	void testDelete() {
 		fail("まだ実装されていません");
 	}
-*/
 }

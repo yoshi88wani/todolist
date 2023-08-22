@@ -47,8 +47,12 @@
             <td>${task.dueDate}</td>
             <td>${task.completed ? "完了" :"未了" }</td>
             <td>
-            	<a href="edit-task?id=${task.id}">編集</a>
-            	<a href="delete-task?id=${task.id}" onclick="return confirm('本当に削除しますか？');">削除</a>
+            	<a href="tasks/edit?id=${task.id}">編集</a>
+            	<form action="${pageContext.request.contextPath}/tasks/delete" method="post" 
+            	  onsubmit="return confirm('本当にこのタスクを削除してもよろしいですか？');" style="display: inline;">
+				    <input type="hidden" name="id" value="${task.id}">
+				    <input type="submit" value="削除">
+				</form>
            	</td>
         </tr>
     </c:forEach>
