@@ -58,8 +58,8 @@ public class TaskService {
      * 
      * @param taskId 削除するタスクのID
      */
-    public void deleteTask(int taskId) {
-        taskDAO.delete(taskId);
+    public void deleteTask(int id) {
+        taskDAO.delete(id);
     }
 
 }

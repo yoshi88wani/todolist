@@ -19,7 +19,7 @@ import com.myapp.todolist.service.TaskService;
 /**
  * タスクの編集に関する操作をハンドルするコントローラークラス
  */
-@WebServlet("/edit-task")
+@WebServlet("/tasks/edit")
 public class TaskEditController extends HttpServlet {
 	
 	private TaskService taskService;

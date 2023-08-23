@@ -7,27 +7,26 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.myapp.todolist.dao.TaskDAO;
 import com.myapp.todolist.model.Task;
 import com.myapp.todolist.util.DatabaseUtil;
 
+@ExtendWith(MockitoExtension.class)
 class TaskServiceTest {
 	
+	@InjectMocks
 	private TaskService taskService;
+	@Mock
 	private TaskDAO mockTaskDAO;
-	
-	@BeforeEach
-	void setUp() {
-		mockTaskDAO = Mockito.mock(TaskDAO.class);
-		taskService = new TaskService(mockTaskDAO);
-	}
 
     @Test
-    public void testGetAllTasks() {
+    void testGetAllTasks() {
         // Mockの準備
         Task task1 = new Task();
         Task task2 = new Task();
@@ -41,7 +40,7 @@ class TaskServiceTest {
         verify(mockTaskDAO).findAll();
     }
     @Test
-    public void testGetAllTasksDatabaseException() {
+    void testGetAllTasksDatabaseException() {
         // Mockの準備
         when(mockTaskDAO.findAll()).thenThrow(new DatabaseUtil.DatabaseException("タスクの取得中にエラーが発生しました。"));
 
@@ -50,9 +49,21 @@ class TaskServiceTest {
             taskService.getAllTasks();
         });
     }
+    
+    @Test
+    void testGetTaskById() {
+    	Task task = new Task();
+    	int id = 1;
+    	task.setId(id);
+    	when(mockTaskDAO.findById(id)).thenReturn(task);
+    	
+    	Task result = taskService.getTaskById(id);
+    	assertEquals(id, result.getId());
+    	verify(mockTaskDAO).findById(id);
+    }
 
     @Test
-    public void testAddTask() {
+    void testAddTask() {
         Task task = new Task();
 
         // メソッドの呼び出し
@@ -63,7 +74,7 @@ class TaskServiceTest {
     }
     
     @Test
-    public void testAddTaskDatabaseException() {
+    void testAddTaskDatabaseException() {
         Task task = new Task();
 
         // Mockの準備
@@ -73,6 +84,22 @@ class TaskServiceTest {
         assertThrows(DatabaseUtil.DatabaseException.class, () -> {
             taskService.addTask(task);
         });
+    }
+    
+    @Test
+    void testUpdateTask() {
+    	Task task = new Task();
+    	taskService.updateTask(task);
+    	verify(mockTaskDAO).update(task);
+    }
+    
+    @Test
+    void testDeleteTask() {
+    	Task task = new Task();
+    	int id = 1;
+    	task.setId(id);
+    	taskService.deleteTask(id);
+    	verify(mockTaskDAO).delete(id);
     }
 
 }
