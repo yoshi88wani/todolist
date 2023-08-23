@@ -7,24 +7,23 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.myapp.todolist.dao.TaskDAO;
 import com.myapp.todolist.model.Task;
 import com.myapp.todolist.util.DatabaseUtil;
 
+@ExtendWith(MockitoExtension.class)
 class TaskServiceTest {
 	
+	@InjectMocks
 	private TaskService taskService;
+	@Mock
 	private TaskDAO mockTaskDAO;
-	
-	@BeforeEach
-	void setUp() {
-		mockTaskDAO = Mockito.mock(TaskDAO.class);
-		taskService = new TaskService(mockTaskDAO);
-	}
 
     @Test
     void testGetAllTasks() {
